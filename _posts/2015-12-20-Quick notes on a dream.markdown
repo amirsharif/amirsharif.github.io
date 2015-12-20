@@ -6,6 +6,7 @@ date: 2015-12-20 11:38:41
 
 Had two visually interesting dreams last night.
 
+
 # 1- A Gallery and a Garden
 
 I was visiting a gallery or a shop of some sort with a group of people (I think I was there with my sister but I'm not sure anymore). When we approached the building, we met with a guide who picked us up from the driveway and took us to an entrance tucked inside an alley. From the outside, there were sandstone walls about 5 or 6 feet high around the perimeter and they were topped with a series of crushed glass screens that added an additional 4 or 5 feet of height. The screens were about 8 feet wide and curved into 90-degree bends around the edges, with 1-foot gaps in between where thin sycamore trees were placed (they were planted inside the perimeter of the wall). Everything was a sort of yellow-beige like someone had put a permanent Valencia filter on the complex.
