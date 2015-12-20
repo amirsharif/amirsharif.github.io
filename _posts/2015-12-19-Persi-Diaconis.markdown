@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Persi Diaconis -- on Randomness"
+title: "Persi Diaconis -- on randomness"
 date: 2015-12-19 17:57:41
 ---
 

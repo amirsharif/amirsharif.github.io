@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Working Definitions: Good Magic vs. Bad"
+title: "Working definitions: Good magic vs. bad"
 date: 2015-12-19 23:02:41
 ---
 
