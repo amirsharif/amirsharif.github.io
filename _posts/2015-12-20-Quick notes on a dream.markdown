@@ -6,7 +6,7 @@ date: 2015-12-20 11:38:41
 
 Had two visually interesting dreams last night.
 
-1. A Gallery and a Garden
+## 1. A Gallery and a Garden
 
 I was visiting a gallery or a shop of some sort with a group of people (I think I was there with my sister but I'm not sure anymore). When we approached the building, we met with a guide who picked us up from the driveway and took us to an entrance tucked inside an alley. From the outside, there were sandstone walls about 5 or 6 feet high around the perimeter and they were topped with a series of crushed glass screens that added an additional 4 or 5 feet of height. The screens were about 8 feet wide and curved into 90-degree bends around the edges, with 1-foot gaps in between where thin sycamore trees were placed (they were planted inside the perimeter of the wall). Everything was a sort of yellow-beige like someone had put a permanent Valencia filter on the complex.
 
@@ -14,7 +14,7 @@ As we walked around this outside wall, you could occasionally see gimpses of the
 
 I don't have clear memories of entering but there was a long, dark corridor that led to the garden. The interior of the building was in the same color scheme and made of stone/marble -- it looked like a restored Modernist building. The corridor ended in wide rectangle that led to the garden. It was a very bright entrance. There were broad sliding doors that had been pushed open. We walked into the garden -- down a few short steps -- and I could see a long fountain that had a Giacommetti man placed in the pool near one end and a single water spout shooting roughly to the same height as the sculpture on the opposite end. There were plain outdoor tables set on a pinkish-sandstone gravel under the shade of the sycamore trees. Old women in big glasses were having lunch. Waiter were appearing from and disappearing into the side of the building, like the kitchen in Manuscript. The building was a 2-story building with a plain balcony extending across the second floor. I think in hindsight the scene was an amalgamation of what I imagine my ideal retail shop to look like, made of elements of houses and schools in Tehran and the Manuscript building (which looks and feels very similar given the Modernist elements).
 
-2. An Airport?
+## 2. An Airport?
 
 The last dream I had before waking up was a very vivid space, though I'm not sure exactly what purpose it served. I was there alone but there was a big crowd of people racing and talking and being generally busy. It felt like maybe an airport or a department store during a holiday rush.
 
