@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Test Post!"
+title: "Test Post"
 date: 2015-04-27 17:40:41
 ---
 
