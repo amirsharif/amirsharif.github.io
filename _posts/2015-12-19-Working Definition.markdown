@@ -1,10 +1,8 @@
 ---
 layout: post
-title: "Magic: Good vs. Bad"
-date: 2015-04-27 23:02:41
+title: "Working Definitions: Good mMgic vs. Bad"
+date: 2015-12-19 23:02:41
 ---
-
-# Working Definitions
 
 Came across [this fascinating profile of Ricky Jay][article] in the New Yorker. Among the many gems was this resonant definition of what can make magic (in its many forms) special vs. trite.
 
