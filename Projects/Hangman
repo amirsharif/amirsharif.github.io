@@ -1,0 +1,93 @@
+def isWordGuessed(secretWord, lettersGuessed):
+    '''
+    secretWord: string, the word the user is guessing
+    lettersGuessed: list, what letters have been guessed so far
+    returns: boolean, True if all the letters of secretWord are in lettersGuessed;
+      False otherwise
+    '''
+    var = True
+    for i in secretWord:
+        if i not in lettersGuessed:
+            var = False
+    return var
+
+def getGuessedWord(secretWord, lettersGuessed):
+    '''
+    secretWord: string, the word the user is guessing
+    lettersGuessed: list, what letters have been guessed so far
+    returns: string, comprised of letters and underscores that represents
+      what letters in secretWord have been guessed so far.
+    '''
+    var = ''
+    for i in secretWord:
+        if i not in lettersGuessed:
+            var += (' _ ')
+        else:
+            var += (' '+i+' ')          
+    return var
+
+import string
+
+def getAvailableLetters(lettersGuessed):
+    '''
+    lettersGuessed: list, what letters have been guessed so far
+    returns: string, comprised of letters that represents what letters have not
+      yet been guessed.
+    '''
+    availL = ''
+    for i in string.ascii_lowercase:
+        if i not in lettersGuessed:
+            availL += i
+    return availL
+
+def guessedAlready(guess,lettersGuessed):
+    if guess.lower() in lettersGuessed:
+        return True
+
+def hangman(secretWord):
+    '''
+    secretWord: string, the secret word to guess.
+
+    Starts up an interactive game of Hangman.
+
+    * At the start of the game, let the user know how many 
+      letters the secretWord contains.
+
+    * Ask the user to supply one guess (i.e. letter) per round.
+
+    * The user should receive feedback immediately after each guess 
+      about whether their guess appears in the computers word.
+
+    * After each round, you should also display to the user the 
+      partially guessed word so far, as well as letters that the 
+      user has not yet guessed.
+
+    Follows the other limitations detailed in the problem write-up.
+    '''  
+    print ('Welcome to the game, Hangman!')
+    print ('I am thinking of a word that is ' + str(len(secretWord)) + ' letters long.')
+    i = 0
+    lettersGuessed = []
+    while i < 9:
+        print ('-------------')
+        if i == 8:
+            print (('Sorry, you ran out of guesses. The word was '+secretWord+'.'))
+            break
+        elif isWordGuessed(secretWord, lettersGuessed) == True:
+            print ('Congratulations, you guessed the word!')
+            break
+        print ('You have '+ str(8-i) +' guesses left.')
+        print ('Available letters: ' + getAvailableLetters(lettersGuessed))
+        guess = raw_input('Please guess a letter: ')
+        if guessedAlready(guess, lettersGuessed) == True:
+            print ("Oops! You've already guessed that letter: "+getGuessedWord(secretWord, lettersGuessed))
+        elif len(guess)>1 or guess.lower() not in string.ascii_lowercase:
+            print ('That entry is not valid. Please guess a single letter that you have not yet guessed.')
+        else:
+            lettersGuessed += guess.lower()
+            if guess in secretWord:
+                print ('Good guess: '+getGuessedWord(secretWord, lettersGuessed))
+
+            else:
+                i += 1
+                print ('Oops! That letter is not in my word: '+getGuessedWord(secretWord, lettersGuessed))
