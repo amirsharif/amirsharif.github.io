@@ -179,3 +179,12 @@ footer #date {
 #home p.intro {
    margin-top: 0px;
 }
+
+#confetti{
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+}
