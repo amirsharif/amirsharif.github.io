@@ -13,7 +13,7 @@ p { margin: 0.5em auto auto auto; }
 
 body {
    background-color: #ecf0f1;
-   font: 9px 'Lato', Helvetica, Arial, sans-serif;
+   font: 12px 'Lato', Helvetica, Arial, sans-serif;
    font-size: small;
    -webkit-font-smoothing: antialiased;
    text-align: center;
@@ -27,7 +27,7 @@ main {
    font-size: 100%;
    text-align: left;
    margin: 3.5em auto 0.5em;
-   max-width: 42em;
+   max-width: 40em;
    padding-left: 2.5em;
    padding-right: 2.5em;
 }
@@ -42,13 +42,25 @@ main {
 
 /* Remove the huge gap at the first paragraph */
 #home p.intro {
-   font-size: 10em;
+   font-size: 11em;
    text-align: center;
    animation-name: color;
    animation-duration: 30s;
    animation-iteration-count: infinite;
    font-family: 'Lato', sans-serif;
    font-style: italic;
+}
+
+@media only screen and (max-width: 768px){
+   #home p.intro {
+   font-size: 6em;
+   text-align: center;
+   animation-name: color;
+   animation-duration: 30s;
+   animation-iteration-count: infinite;
+   font-family: 'Lato', sans-serif;
+   font-style: italic;
+   }
 }
 
 #home p.notes {
