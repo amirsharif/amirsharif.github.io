@@ -20,8 +20,8 @@ body {
 }
 
 /* Gentle links */
-a { color: #3498DB; text-decoration: none; }
-a:hover { color: #2980B9; }
+a { color: #5A6FFA; text-decoration: none; }
+a:hover { color: #7AE820; }
 
 /* Don't display date if screen is small */
 @media only screen and (max-width: 400px) {
@@ -29,12 +29,12 @@ a:hover { color: #2980B9; }
 }
 
 main {
-   font-size: 115%;
+   font-size: 100%;
    text-align: left;
    margin: 3.5em auto 0.5em;
    max-width: 42em;
-   padding-left: 10px;
-   padding-right: 10px;
+   padding-left: 30px;
+   padding-right: 30px;
 }
 
 @keyframes color {
@@ -47,7 +47,7 @@ main {
 
 /* Remove the huge gap at the first paragraph */
 #home p.intro {
-   font-size: 100px;
+   font-size: 120px;
    text-align: center;
    animation-name: color;
    animation-duration: 30s;
