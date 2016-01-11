@@ -47,7 +47,7 @@ main {
 
 /* Remove the huge gap at the first paragraph */
 #home p.intro {
-   font-size: 150px;
+   font-size: 100px;
    text-align: center;
    animation-name: color;
    animation-duration: 30s;
