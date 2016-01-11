@@ -9,7 +9,7 @@
 
 html, body { height: 100%; }
 h1 { font-size: 100%; }
-p { margin: 20px auto auto auto; }
+p { margin: 0.5em auto auto auto; }
 
 body {
    background-color: #ecf0f1;
@@ -42,7 +42,7 @@ main {
 
 /* Remove the huge gap at the first paragraph */
 #home p.intro {
-   font-size: 11.2em;
+   font-size: 10em;
    text-align: center;
    animation-name: color;
    animation-duration: 30s;
@@ -53,7 +53,7 @@ main {
 
 #home p.notes {
    background-color: rgba(255,255,255,0.85);
-   font-size: 20px;
+   font-size: 1.5em;
    font-family: 'Lato', sans-serif;
    line-height: 100%;
    padding: 1.5em 1.5em 1.5em 1.5em;
