@@ -190,7 +190,6 @@ footer #date {
    text-align: center;
    animation-name: color;
    animation-duration: 10s;
-   animation-direction:alternate;
    animation-iteration-count: infinite;
 }
 
