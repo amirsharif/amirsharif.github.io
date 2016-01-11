@@ -23,18 +23,13 @@ body {
 a { color: #5A6FFA; text-decoration: none; }
 a:hover { color: #7AE820; }
 
-/* Don't display date if screen is small */
-@media only screen and (max-width: 400px) {
-   .posts li span { display: none; }
-}
-
 main {
    font-size: 100%;
    text-align: left;
    margin: 3.5em auto 0.5em;
    max-width: 42em;
-   padding-left: 30px;
-   padding-right: 30px;
+   padding-left: 3em;
+   padding-right: 3em;
 }
 
 @keyframes color {
@@ -47,7 +42,7 @@ main {
 
 /* Remove the huge gap at the first paragraph */
 #home p.intro {
-   font-size: 120px;
+   font-size: 11.2em;
    text-align: center;
    animation-name: color;
    animation-duration: 30s;
@@ -61,7 +56,7 @@ main {
    font-size: 20px;
    font-family: 'Lato', sans-serif;
    line-height: 100%;
-   padding: 25px 25px 25px 25px;
+   padding: 1.5em 1.5em 1.5em 1.5em;
 }
 
 #confetti{
