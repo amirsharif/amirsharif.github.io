@@ -13,7 +13,7 @@ p { margin: 0.5em auto auto auto; }
 
 body {
    background-color: #ecf0f1;
-   font: 12px 'Lato', Helvetica, Arial, sans-serif;
+   font: 9px 'Lato', Helvetica, Arial, sans-serif;
    font-size: small;
    -webkit-font-smoothing: antialiased;
    text-align: center;
