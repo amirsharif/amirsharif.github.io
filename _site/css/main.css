@@ -17,6 +17,7 @@ body {
    font-size: small;
    -webkit-font-smoothing: antialiased;
    text-align: center;
+   overflow: hidden;
 }
 
 /* Gentle links */
