@@ -65,7 +65,7 @@ main {
 
    #home p.notes {
    background-color: rgba(255,255,255,0.85);
-   font-size: 1em;
+   font-size: 0.75em;
    font-family: 'Lato', sans-serif;
    line-height: 100%;
    padding: 1.5em 1.5em 1.5em 1.5em;
