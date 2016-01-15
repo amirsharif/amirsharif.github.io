@@ -8,8 +8,8 @@
       <link rel="stylesheet" href="/css/syntax.css">
       <link rel="stylesheet" href="/css/main.css">
       <link rel="stylesheet" href="/css/normalize.css">
-      <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-      <link rel="icon" href="/IMG_0766.jpg" type="image/x-icon">
+      <link rel="shortcut icon" href="/IMG_0766.jpg" type="image/jpeg">
+      <link rel="icon" href="/IMG_0766.jpg" type="image/jpeg">
       <link rel="alternate" type="application/atom+xml" href="/atom.xml">
       <link href='https://fonts.googleapis.com/css?family=Lato:400,900italic' rel='stylesheet' type='text/css'>
    </head>
@@ -20,19 +20,19 @@
 {
    "title": "Dumb paradoxes",
    "date":  "2015-12-20 21:44:41 -0500",
-   "url":   "/Dumb-paradoxes"
+   "url":   "/Dumb%20paradoxes"
 },
 
 {
    "title": "Quick notes on a couple of dreams",
    "date":  "2015-12-20 06:38:41 -0500",
-   "url":   "/Quick-notes-on-a-dream"
+   "url":   "/Quick%20notes%20on%20a%20dream"
 },
 
 {
    "title": "Working definitions: Good magic vs. bad",
    "date":  "2015-12-19 18:02:41 -0500",
-   "url":   "/Working-Definition"
+   "url":   "/Working%20Definition"
 },
 
 {
