@@ -2,9 +2,6 @@
 * {
    margin: 0;
    padding: 0;
-   -moz-box-sizing: border-box;
-   -webkit-box-sizing: border-box;
-   box-sizing: border-box;
 }
 
 html, body { height: 100%; }
@@ -52,6 +49,14 @@ main {
    font-style: italic;
 }
 
+#home p.notes {
+   background-color: rgba(255,255,255,0.85);
+   font-size: 1.5em;
+   font-family: 'Lato', sans-serif;
+   line-height: 100%;
+   padding: 1.5em 1.5em 1.5em 1.5em;
+}
+
 @media only screen and (max-width: 768px){
    #home p.intro {
    font-size: 6em;
@@ -69,16 +74,9 @@ main {
    font-family: 'Lato', sans-serif;
    line-height: 100%;
    padding: 1.5em 1.5em 1.5em 1.5em;
-}
+   }
 }
 
-#home p.notes {
-   background-color: rgba(255,255,255,0.85);
-   font-size: 1.5em;
-   font-family: 'Lato', sans-serif;
-   line-height: 100%;
-   padding: 1.5em 1.5em 1.5em 1.5em;
-}
 
 #confetti{
   position: absolute;
