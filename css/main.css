@@ -2,9 +2,9 @@
 * {
    margin: 0;
    padding: 0;
--   -moz-box-sizing: border-box;
--   -webkit-box-sizing: border-box;
--   box-sizing: border-box
+   -moz-box-sizing: border-box;
+   -webkit-box-sizing: border-box;
+   box-sizing: border-box;
 }
 
 html, body { height: 100%; }
@@ -41,7 +41,6 @@ main {
    100% {color: #FFE53B}
 }
 
-/* Remove the huge gap at the first paragraph */
 #home p.intro {
    font-size: 11em;
    text-align: center;
@@ -79,7 +78,6 @@ main {
    padding: 1.5em 1.5em 1.5em 1.5em;
    }
 }
-
 
 #confetti{
   position: absolute;
