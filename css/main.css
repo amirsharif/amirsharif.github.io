@@ -34,11 +34,10 @@ main {
 }
 
 @keyframes color {
-   0% {color: #FF5E19}
-   25% {color: #3B55FF}
-   50% {color: #7AE820}
-   75% {color: #FFE53B}
-   100% {color: #FF5E19}
+   25% {color: #FF5E19}
+   50% {color: #3B55FF}
+   75% {color: #7AE820}
+   100% {color: #FFE53B}
 }
 
 #home p.intro {
