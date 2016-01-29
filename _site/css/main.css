@@ -35,6 +35,7 @@ main {
 
 @keyframes color {
    0% {color: #3B55FF}
+   5% {color: #3B55FF}
    25% {color: #7AE820}
    50% {color: #FFE53B}
    75% {color: #FF5E19}
