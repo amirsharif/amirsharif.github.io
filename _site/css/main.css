@@ -69,7 +69,7 @@ main {
   z-index: -1;
 }
 
-@media only screen and (max-width: 667px){
+@media only screen and (max-width: 600px){
    #home p.intro {
    font-size: 6em;
    text-align: center;
