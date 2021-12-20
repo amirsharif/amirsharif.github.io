@@ -1,0 +1,10 @@
+name: "Amir Sharif"
+markdown: kramdown
+highlighter: pygments
+permalink: :title
+exclude: [README.md, LICENSE, Makefile]
+
+# Information for the Atom feed
+Amir:
+  author: "Amir Sharif"
+  email: "amir@ploof.xyz"

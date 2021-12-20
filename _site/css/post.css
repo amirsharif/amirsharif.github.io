@@ -1,0 +1,111 @@
+/* Some assumptions */
+* {
+  margin: 0;
+  padding: 0;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html,
+body,
+h1 {
+  font-size: 100%;
+  color: #003e83;
+}
+h2 {
+  font-size: 160%;
+  color: #328e13;
+}
+p {
+  margin: 0.1em auto auto auto;
+}
+
+body {
+  background-color: #ecf0f1;
+  font: 12px "Lato", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-align: left;
+}
+#img img {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+/* Gentle links */
+a {
+  color: #ff5e19;
+  text-decoration: none;
+}
+a:hover {
+  color: #7ae820;
+}
+
+main {
+  font-size: 100%;
+  text-align: left;
+  margin: 0.25em auto 0;
+  max-width: 60em;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+@keyframes color {
+  0% {
+    color: #3b55ff;
+  }
+  5% {
+    color: #3b55ff;
+  }
+  25% {
+    color: #7ae820;
+  }
+  50% {
+    color: #ffe53b;
+  }
+  75% {
+    color: #ff5e19;
+  }
+  100% {
+    color: #3b55ff;
+  }
+}
+
+#home p.intro {
+  font-size: 3em;
+  text-align: center;
+  animation-name: color;
+  animation-duration: 30s;
+  animation-iteration-count: infinite;
+  font-family: "Lato", sans-serif;
+  font-style: italic;
+}
+
+#home p.notes {
+  background-color: rgba(255, 255, 255, 0.85);
+  font-size: 1.5em;
+  font-family: "Lato", sans-serif;
+  line-height: 125%;
+  padding: 1.5em 1.5em 1.5em 1.5em;
+}
+
+@media only screen and (max-width: 600px) {
+  #home p.intro {
+    font-size: 3em;
+    text-align: center;
+    animation-name: color;
+    animation-duration: 30s;
+    animation-iteration-count: infinite;
+    font-family: "Lato", sans-serif;
+    font-style: italic;
+  }
+
+  #home p.notes {
+    background-color: rgba(255, 255, 255, 0.85);
+    font-size: 1.25em;
+    font-family: "Lato", sans-serif;
+    line-height: 125%;
+    padding: 1.5em 1.5em 1.5em 1.5em;
+  }
+}

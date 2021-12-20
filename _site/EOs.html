@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Amir Sharif</title>
+    <meta name="description" content="Amir Sharif" />
+    <meta name="author" content="Amir Sharif" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="/css/syntax.css" />
+    <link rel="stylesheet" href="/css/post.css" />
+    <link rel="stylesheet" href="/css/normalize.css" />
+    <link rel="alternate" type="application/atom+xml" href="/atom.xml" />
+
+    <!-- Icons -->
+    <link rel="shortcut icon" href="/icon.png" type="image/png" />
+    <link rel="icon" href="/icon.png" type="image/png" />
+
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:400,900italic"
+      rel="stylesheet"
+      type="text/css"
+    />
+
+    <!-- Mathjax -->
+    <script
+      type="text/javascript"
+      src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML,
+      /javascripts/MathJaxLocal.js"
+    ></script>
+
+    <!-- ApexCharts -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  </head>
+
+  <body>
+    <main><div id="home">
+  <br />
+  <br />
+  <p class="intro">notes on<br />everlasting options</p>
+  <br />
+</div>
+<div id="home">
+  <p class="notes">
+    A few weeks ago, I read
+    <a href="https://twitter.com/_dave__white_">@_Dave__White_</a> and
+    <a href="https://twitter.com/SBF_FTX">@SBF_FTX</a>'s
+    <a href="https://www.paradigm.xyz/2021/05/everlasting-options/">paper</a> on
+    everlasting options for the first time. <br /><br />
+    A few things surprised me and I became interested in trying to ‘warp’ them
+    with different compositional assumptions. I jotted down some notes and
+    tweeted some takeaways <a href="">here [LINK TO TWEETS ONCE YOU TWEET]</a>.
+  </p>
+  <br />
+  <h2>QUESTIONS</h2>
+  <p class="notes">
+    I was curious to better understand some of the dynamics of EOs.
+    Specifically: <br /><br />
+    1 – How does the mark, funding fee, and funding fee volatility of an EO
+    change as a function of FF (funding frequency)?
+    <br /><br />
+    2 – What are the trade-offs of choosing a lower vs. higher FF?
+    <br /><br />
+    3 – What happens if we try to manipulate the composition of an EO's
+    equivalent portfolio by replacing the FF-defined weighting term with other
+    geometric series?
+  </p>
+  <br />
+  <h2>1.a – RELATIONSHIP BETWEEN FF AND THE MARK OF AN EO</h2>
+  <p class="notes">
+    It’s possible to answer these questions just by manipulating the
+    Black-Scholes formula\(^1\) but I thought it would be more fun (and more
+    digestible) to try to observe these relationships tangibly. So I pulled some
+    data on Apple call options and constructed an artificial EO call on Apple at
+    a $140 strike.
+    <br /><br />
+    My colab workbook is
+    <a
+      href="https://colab.research.google.com/drive/1L8eq-2N2-Vuxc26DgPpv_tL8gZZ4QheA?usp=sharing"
+      >here</a
+    >. <br /><br />
+    And the underlying data with my janky excel clean up work is
+    <a
+      href="https://docs.google.com/spreadsheets/d/172A32b5C3jN0OwQYEc0C4qi2Zj9XX1tI/edit?usp=sharing&ouid=100247262631856998407&rtpof=true&sd=true"
+      >here</a
+    >.
+    <a
+      href="https://drive.google.com/file/d/1O0tLtcm-Ti4LmL8Xgh2r73mBTQi6qr3l/view?usp=sharing"
+      >This</a
+    >
+    is the csv export I reference in the colab workbook. (Data is sourced from
+    the
+    <a href="https://www.cboe.com/delayed_quotes/aapl/quote_table"
+      >Chicago Board Options Exchange</a
+    >.) <br /><br />
+    (Note: I used a $140 strike because it’s the most commonly traded call
+    strike for Apple at the moment.)
+    <br /><br />
+    There’s a small issue with trying to compute an EO using real-world option
+    prices – we actually won’t have options to reference for every major
+    expiration term in our EO.
+    <br /><br />
+    How might we then establish an 'equivalent portfolio' to reference for
+    pricing our EO? I used the options that were available to derive a best-fit
+    curve so I could then infer prices for daily maturities. This allowed me to
+    construct an 'equivalent portfolio' with realistic regprices for calls that
+    don’t actually exist on CBOE. Real-world options will vary slightly from
+    this curve, which creates arbitrage opportunities; at scale, if EOs are
+    broadly traded, I imagine they should impact the price of traditional
+    options, forcing them to trade along an EO curve like what’s computed below:
+  </p>
+  <br />
+  <div id="img" style="background-color: white">
+    <img src="/assets/PLOT1.png" width="67%" />
+  </div>
+  <br />
+  <p class="notes">
+    We can see that Apple calls with a $140 strike can be roughly priced
+    according to the line:
+    <br />
+    y = 0.57829 * x^0.55844 + 2.15977
+    <br /><br />
+    Where y = price of a traditional expiring option that’s x days from
+    expiration.
+    <br /><br />
+    (It’s helpful to note this is a root function, which means it doesn’t have a
+    horizontal asymptote. If it did, then we may not need EOs at all. We could
+    instead buy an option with an expiration infinitely far out into the future
+    and pay a high finite value for it.)
+    <br /><br />
+    So what’s the impact of this price curve on the mark of our EO?
+    <br /><br />
+    As FF increases, the composition of options in the equivalent portfolio
+    flattens, shifting more of the weight of the EO into the tail.\(^2\)
+    <br /><br />
+    Since later expirations are more expensive, we should expect the mark of an
+    EO to increase as a function of FF.
+    <br /><br />
+    Calculating the mark of different FFs shows us that our mark indeed
+    increases, also following a root function.\(^3\)
+  </p>
+  <br />
+  <div id="img" style="background-color: white">
+    <img src="/assets/PLOT2.png" width="67%" />
+  </div>
+  <br />
+  <h2>1.b – RELATIONSHIP BETWEEN FF AND THE FUNDING FEE OF AN EO</h2>
+  <p class="notes">
+    Recall, funding fee = (1/FF)(mark - payoff).
+    <br /><br />
+    As FF increases, we should see the funding fee decrease due to the term
+    1/FF. However, as noted above, we should also expect our mark to increase as
+    FF increases.
+    <br /><br />
+    What’s the net of these two impacts? Since our option price only scales as a
+    root function of maturity (scaling more slowly than 1/FF decays), our fee
+    ends up dropping as FF grows.
+  </p>
+  <br />
+  <div id="img" style="background-color: white">
+    <img src="/assets/PLOT3.png" width="67%" />
+  </div>
+  <br />
+  <p class="notes">
+    It’s interesting to consider that as FF increases, the mark paid upfront for
+    an EO should increase, but the incremental funding fee required to roll it
+    fwd should decrease.
+  </p>
+  <br />
+  <h2>1.c – RELATIONSHIP BETWEEN FF AND THE FUNDING FEE VOLATILITY OF AN EO</h2>
+  <p class="notes">
+    How much should we expect our funding fee to vary from period to period as a
+    result of choosing one FF over another?
+    <br /><br />
+    This is a bit trickier. If there’s no change in the underlying spot, then we
+    shouldn’t see any change to our funding fee, so this is really a
+    3-dimensional sensitivity analysis of the funding fee relative to the
+    underlying spot and potential FFs.
+    <br /><br />
+    To assess price fluctuations across varying spot prices, I needed to model
+    price as a function of spot values. Our real-world dataset sadly doesn’t
+    provide historical option prices according to varying spots, so I couldn’t
+    derive the relationship with real data. Instead I relied on the
+    Merton-adjusted Black-Scholes call formula.
+  </p>
+  <br />
+  <div id="img" style="background-color: white">
+    <img src="/assets/PLOT4.png" width="67%" />
+  </div>
+  <br />
+  <p class="notes">
+    Tweaking the inputs a bit, I was able to get the Black-Scholes curve sorta
+    close to our best-fit curve. Black-Scholes slightly under-prices in the
+    near-term and over-prices in the outlying maturities relative to the
+    real-world benchmark. There are likely a bunch of flaws in the way I’ve
+    implemented Black-Scholes (e.g., using a static risk-free interest rate
+    across all maturities lol), but for my purposes this is close enough and
+    gives me a way to observe price movements as a function of the spot.
+    <br /><br />
+    Looking at this Apple call, if the spot shifts 5% above or below our spot
+    benchmark today ($142.90), we can see that the price changes most for
+    options with near-term expirations and relatively less so for options with
+    later expirations.
+  </p>
+  <br />
+  <div id="img" style="background-color: white">
+    <img src="/assets/PLOT5_6.png" width="85%" />
+  </div>
+  <br />
+  <p class="notes">
+    Conceptually this makes sense: If we think of options as comprising both
+    ‘intrinsic value’ (driven by the delta between their strike and spot) and
+    ‘time value’ (driven by time to expiration), time value will make up a
+    greater % of later expirations’ price and so changes in the intrinsic value
+    will have a relatively muted effect on overall price.
+    <br /><br />
+    If our EO has a higher FF, we should be more exposed to ‘later expirations.'
+    As such, the overall mark of our EO is less volatile as spot moves.
+    <br /><br />
+    What's the net impact on the funding fee? It's easy to calculate funding fee
+    as a function of spot, so let’s just do it and see:
+  </p>
+  <br />
+  <div id="img" style="background-color: white">
+    <img src="/assets/PLOT7_8.png" width="67%" />
+  </div>
+  <br />
+  <p class="notes">
+    Great – so the funding fee is more sensitive at lower FFs.
+    <br /><br />
+    But something else surprised me in seeing this – the funding fee actually
+    goes down as the call moves further into <u>or</u> out of the money. This
+    was super weird to me at first and I assumed I’d made a mistake somewhere.
+    <br /><br />
+    To better understand this, I decided to look at the funding fee of two EOs –
+    one set to FF=1 and another with FF=5 – across a range of spots:
+  </p>
+  <br />
+  <div id="img" style="background-color: white">
+    <img src="/assets/PLOT9.png" width="60%" />
+  </div>
+  <br />
+  <p class="notes">
+    We can see our funding fee is highest right at the threshold of being in the
+    money (recall: strike = $140), where our EO mark is maximized but we are
+    still expecting a payoff of ~0. It’s interesting to see that as FF increases
+    to 5, the peak fee drops dramatically, in this case by ~80%.
+    <br /><br />
+    The cumulative impact of these dynamics is interesting to consider: For an
+    EO that’s close to the money, a lower FF will increase both the funding fee
+    and the relative variance of the funding fee period-to-period.
+    <br /><br />
+    This might create risk for liquidity-challenged longs holding
+    deep-in-the-money EO calls. If there's an intermittent drop in the spot,
+    they may be forced to lapse on escalating funding fees, causing their
+    portfolios to expire. This is a boon for shorts, whose payoff obligations
+    decrease in this scenario just as they are on the hook to fund payoffs. As
+    can be seen, at lower FFs, a few % shift in the underlying spot can create
+    orders of magnitude increases in fees for longs. Super interesting!
+    <br /><br />
+    Overall, I was really surprised by the cashflow dynamics of EOs – it would
+    appear there are a number of ways they could be manipulated by both longs
+    and shorts to maximize returns.\(^4\)
+  </p>
+  <br />
+  <h2>2 – WHAT ARE THE TRADE-OFFS OF CHOOSING A LOWER VS. HIGHER FF?</h2>
+  <p class="notes">
+    Pausing here, I tried to think about practical applications for EOs.
+    <br /><br />
+    One idea that came to mind: Using an EO to hedge against intermittent
+    movements in a soft-pegged stablecoin. I was curious how the liquidation
+    crunch that took place in Dai could have been contained if those who held
+    Dai as collateral could have purchased a Dai-based EO ‘put.’ The funding fee
+    effectively becomes an insurance premium paid by longs to shorts to receive
+    a $ payoff if/when Dai experiences an intermittent drop relative to $.
+    Letting an EO put expire would allow longs to receive payoffs as the
+    underlying sinks, helping to cover escalating near-term collateral
+    obligations and thereby helping to abate cascading liquidations.
+    <br /><br />
+    Here, the timeline by which a price fluctuation is expected to cascade
+    through the market can be a helpful determinant for the relevant funding
+    frequency / funding period assumptions for the EO. I would ideally want to
+    use a funding frequency that minimizes my fees and fee volatility, but still
+    gives me sufficient near-term payoffs in the case of a downward price
+    movement in the underlying. It would be fun to determine the ideal terms
+    using historical data from past liquidation crunches.
+  </p>
+  <br />
+  <h2>3 – 'WARPING' EOs</h2>
+  <p class="notes">
+    [EMBED TWEETS ON EVERLASTING OPTIONS HERE]
+    <br /><br />
+    Overall, what’s the point of these alternative weightings?
+    <br /><br />
+    As we’ve already observed, altering the composition of an EO has an impact
+    on the mark, funding fee, and funding fee volatility rate of an EO.
+    <br /><br />
+    But I actually think the most interesting consequence of a 'warped' EO is
+    that, in the case where a funding fee is not paid, the long position will
+    close at a varying pace, meaning that shorts might have more notice of a
+    major upcoming funding obligation to longs who are letting their EOs expire.
+    This has important implications for shorts and could also have consequences
+    for the type and amount of collateral that shorts might have to post.
+    <br /><br />
+    There's a lot to unpack in the above, but before getting ahead of myself,
+    it’s important to mention the underlying flaw with ‘warping’ EOs.
+    <br /><br />
+    In brief, the funding fee of these EOs becomes disjointed from their mark
+    and payoffs. The funding fee becomes equivalent to opening a new position in
+    a different portfolio of options at each funding period, required a highly
+    fractured pool of short/long positions.
+    <br /><br />
+    Let’s walk through this in simple steps.
+    <br /><br />
+    Recall that an EO is designed to expire in regular intervals. In order to
+    roll a position forward, a trader who is long has to, effectively, buy more
+    options such that they ‘replace’ what’s expiring at each interval.
+    <br /><br />
+    What happens in the case of a ‘warped’ EO?
+    <br /><br />
+    Consider a portfolio that’s weighted by the convergent series n/2^(n+1). The
+    weight terms of the equivalent portfolio become:
+  </p>
+  <div id="chart5">
+    <!-- classic EO -->
+    <script>
+      function series_warped(n) {
+        terms = [];
+        for (i = 1; i <= n; i++) {
+          terms.push(((i / 2 ** (i + 1)) * 100).toFixed(2));
+        }
+        console.log(terms);
+        return terms;
+      }
+
+      var options = {
+        chart: {
+          type: "bar",
+        },
+
+        title: {
+          text: "The first 10 weights for an EO set to n/2^(n+1)",
+          align: "left",
+          margin: 10,
+          offsetX: 0,
+          offsetY: 0,
+          floating: false,
+          style: {
+            fontSize: "14px",
+          },
+        },
+
+        series: [
+          {
+            name: "options (sorted in order of increasing time to expiration)",
+            data: series_warped(10),
+          },
+        ],
+        xaxis: {
+          categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        },
+        yaxis: {
+          labels: {
+            formatter: function (val, index) {
+              return val.toFixed(0) + "%";
+            },
+          },
+        },
+      };
+
+      var chart = new ApexCharts(document.querySelector("#chart5"), options);
+
+      chart.render();
+    </script>
+  </div>
+  <p class="notes">
+    If we were to try to buy more of the same portfolio, with the intention of
+    preserving the composition of the portfolio post-expiration, we would want
+    to solve for x in the following function (where x is a multiple of our
+    portfolio that we have to buy pre-expiration):
+    $$x\left({n\over{2^{n+1}}}\right) = {n\over{2^n}}$$
+    <br />
+    $$x = {2n-2\over{n}}$$
+    <br /><br />
+    Note: Here, the term n can't be factored out, which effectively means we
+    have to buy a different amount of each term in order to succcessfully roll
+    our portfolio fwd.
+    <br /><br />
+    The amount we’d actually have to buy of each term would be:
+    <br /><br />
+    $$\left({2n-2\over{n}}\right)\left(n\over{2^{n+1}}\right) -
+    \left({n}\over{2^{n+1}}\right)$$
+    <br />
+    Which reduces to: $${n^2-2n}\over{n2^{n+1}}$$
+    <br />
+    Phew! Try it out. If we want to make our third term equivalent to our second
+    by buying more of the third term, our n=3 and we’d have to buy \(2^{-4}\).
+    Does that work? Our third term in our EO has a weight of 3/16. If we buy
+    1/16 of it, we end up with 3/16 + 1/16 = 4/16 = 1/4 = the right weight for
+    our second term.
+    <br /><br />
+    We can actually visualize how much of each option we’d have to buy for our
+    portfolio to roll fwd successfully – shown below in green:
+  </p>
+  <div id="chart10">
+    <!-- classic EO -->
+    <script>
+      function series_warped(n) {
+        terms = [];
+        for (i = 1; i <= n; i++) {
+          terms.push(((i / 2 ** (i + 1)) * 100).toFixed(2));
+        }
+        console.log(terms);
+        return terms;
+      }
+
+      function series_warped_grossup(n) {
+        terms = [0];
+        for (i = 2; i <= n; i++) {
+          terms.push(
+            (((i ** 2 - 2 * i) / (i * 2 ** (i + 1))) * 100).toFixed(2)
+          );
+        }
+        console.log(terms);
+        return terms;
+      }
+
+      var options = {
+        chart: {
+          type: "bar",
+          stacked: true,
+        },
+
+        title: {
+          text: "The first 10 weights for an EO set to n/2^(n+1)",
+          align: "left",
+          margin: 10,
+          offsetX: 0,
+          offsetY: 0,
+          floating: false,
+          style: {
+            fontSize: "14px",
+          },
+        },
+
+        series: [
+          {
+            name: "options (sorted in order of increasing time to expiration)",
+            data: series_warped(10),
+          },
+          {
+            name: "new position",
+            data: series_warped_grossup(10),
+          },
+        ],
+        xaxis: {
+          categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        },
+        yaxis: {
+          labels: {
+            formatter: function (val, index) {
+              return val.toFixed(0) + "%";
+            },
+          },
+        },
+      };
+
+      var chart = new ApexCharts(document.querySelector("#chart10"), options);
+
+      chart.render();
+    </script>
+  </div>
+
+  <p class="notes">
+    As you can see, this ‘green’ portfolio’s composition is different from our
+    EO’s composition. Interestingly, this purchase would be akin to buying a
+    quarter of our existing EO, but with our date index starting 2 funding
+    periods later. If we multiply the terms by 4 and shift the x axis to the
+    left by 2, you can see our curves overlapping with each other
+    <a href="https://www.desmos.com/calculator/mfmxup2sho">here</a> (click on
+    the purple curve to visualize it over the red). <br /><br />
+    In effect: $${4{(n+2)^2-2(n+2)}\over{(n+2)2^{n+2}}} = {n\over{2^{n+1}}}$$
+    <br />
+    Which is kind of wild!
+    <br /><br />
+    But this is also akin to buying another EO altogether. Each funding period,
+    we'd need a different portfolio, indexed to another 2 periods later, to
+    successfully roll fwd.
+    <br /><br />
+    This creates some tough issues, notably that there needs to be a new short
+    portfolio offered every funding period for a given EO to successfully ‘gross
+    up’ positions. There are also added complexities if a long intermittently
+    skips funding periods, creating ‘warped’ exposures for both longs and
+    shorts. With a constant-rate decaying EO, we can pool all short positions
+    for a given strike together and the ‘gross up’ portfolio required to roll
+    fwd turns out to be the EO itself, ultimately increasing market liquidity
+    around a single instrument.
+    <br /><br />
+    This issue is even more complicated for series that don’t monotonically
+    decay from n=1 to infinity, such as our earlier example of ln(n)/(5(n-5)^2
+    +5). The math is really ugly but it’s easy to visualize the mechanics of
+    what would have to happen – in this case, because of the hump around the 5th
+    term, as longs who want to roll our portfolios fwd we’d actually have to go
+    short on a chunk of the fifth term so we’re not overweight post-expiration
+    when those options become our fourth term. In essence, we have to open a
+    bunch of new long and one notable short position to roll fwd – and our
+    funding fee is effectively the delta between these increasingly complicated
+    cashflows.
+    <br /><br />
+    To simplify, if we were to roll a ‘warped’ EO fwd, our funding fee could be
+    thought of as (mark2 - (first weight term)*payoff), where mark2 indicates
+    the purchase of the “gross up” portfolio for that EO as defined above.
+    <br /><br />
+    Oof!
+    <br /><br />
+    But the truth is, since we’re dealing with a derivative of an imaginary
+    options portfolio, these ‘warped’ EOs are perfectly valid. They’re just
+    challenging to track if you’re trying to do the math on pen and paper and
+    they greatly fracture the pooling of short/long positions. That's pretty
+    bad, but maybe the most damning criticism of these EOs is that they may have
+    no real utility. I’d be very curious if there’s ever a need to hedge by a
+    specific count of days into the future vs. holding an EO that is most
+    exposed to its next immediate expiration and less so going forward. If there
+    is utility, I'd love to hear about relevant cases. If there's such a
+    scenario, it may still make sense for specialized shorts to offer these as
+    bespoke instruments.
+    <br /><br />
+    Waow, you’ve really made it all the way to the end! Send me an email at
+    amir@ploof.xyz – I want to hear from you.
+  </p>
+  <br /><br />
+  <hr />
+  <br /><br />
+  <p class="notes">
+    Outstanding questions: <br /><br />
+    In the case where a long lapses on funding payments, how long will shorts
+    continue distributing payoffs before their obligations are considered
+    closed?
+    <br /><br />
+    Does the price of an EO need to have a discount term applied to it to
+    account for a ‘terminal payment?’
+    <br /><br />
+    What’s the right framework for thinking about posted collateral? How is this
+    handled in traditional options today? What’s the effective net P&L for
+    shorts / longs?
+  </p>
+  <br /><br />
+  <hr />
+  <br /><br />
+  <p class="notes">
+    Footnotes: <br /><br />
+    \(1–\) <br />
+    We could answer this by taking the partial derivative of the Black-Scholes
+    formula corresponding to ∂C/∂t, with C and t defined below. But I find it
+    hard to build intuition around the dynamics of the terms at this level given
+    the complexity of the Black-Scholes formula.
+  </p>
+  <br />
+  <div id="img" style="background-color: white">
+    <img src="/assets/b-s.png" width="50%" />
+  </div>
+  <br />
+  <p class="notes">
+    \(2–\)<br />
+    In the pricing formula provided in appendix B of the paper, the price of
+    each constituent option in the 'equivalent portfolio' is multiplied by a
+    term defined by the EO’s ‘funding frequency’ (referred to as FF from here
+    on):
+    <br />
+    $$\left({1\over{FF}}\right)\left({FF\over{FF+1}}\right)^n$$
+    <br />
+    Where n refers to the index of the option in the equivalent basket. Note:
+    the term n follows a 1-based index, so the first option to expire in our
+    equivalent portfolio has an index of 1, not 0.
+    <br /><br />
+    In the case where FF = 1, we get the very clean series \(1\over2^n\). As
+    shown in the paper, this results in the following weightings (shown as a
+    continuous line):
+  </p>
+  <br />
+  <center>
+    <iframe
+      src="https://www.desmos.com/calculator/ppj2sxfs2f?embed"
+      width="250"
+      height="250"
+      style="border: 1px solid #ccc"
+      frameborder="0"
+    ></iframe>
+  </center>
+  <br />
+  <p class="notes">
+    What happens if funding is paid twice per day? FF = 2 and our series now
+    turns into \(2^{(n-1)}\over{3^n}\). This series starts with the term 1/3 and
+    decays by 2/3 for each term:
+  </p>
+  <br />
+  <center>
+    <iframe
+      src="https://www.desmos.com/calculator/rwaguyswzr?embed"
+      width="250"
+      height="250"
+      style="border: 1px solid #ccc"
+      frameborder="0"
+    ></iframe>
+  </center>
+  <br />
+  <p class="notes">
+    There’s an interesting relationship between the FF and our portfolio
+    weighting – as our frequency increases, our portfolio becomes more evenly
+    weighted. In the limit, we effectively hold an equal and infinitesimally
+    small amount of each option in the equivalent portfolio.
+  </p>
+  <br />
+  <p class="notes">
+    \(3–\)
+    <br />
+    I later learned this curve is sometimes used to describe the ‘time-value’ of
+    an option – or alternatively the ‘theta decay’ as an option approaches its
+    expiration date. In effect, the change in an option’s value from t = 1 to t
+    = 2 is going to be relatively greater than the change from t = 300 to t =
+    301 (as observed in the Apple call price curve). This intuitively makes
+    sense: In the first instance we’re doubling the amount of time we have for
+    our option to realize a payoff, and in the latter we’re adding a measly
+    33bps of time to our maturity window.
+  </p>
+  <br />
+  <p class="notes">
+    \(4–\)
+    <br />
+    EOs are in principle very similar to perps, but since the payoff of an
+    option is always ≥$0, we end up with a bunch of interesting asymmetries for
+    which there are no corollaries in perps. Three noteworthy considerations:
+    All else being equal, a later-expiring option will always be more expensive
+    than a nearer expiration As such, the mark of an EO (which is effectively a
+    weighted average price of all future expirations of an underlying at a fixed
+    strike) will always be ≥ the payoff of an equivalent traditional option
+    expiring at the EO’s next funding period Therefore, following the funding
+    fee formula of (1/FF)(mark - payoff), we can see that the funding fee of an
+    EO never turns negative
+    <br /><br />
+    This means that longs always have to pay the funding fee to shorts. However,
+    longs aren’t obligated to pay the funding fee! They could lapse, in which
+    case shorts are obligated to fund payoffs to longs, shifting the direction
+    of cash flows as the EO partially expires.
+    <br /><br />
+    What’s interesting about this relationship is that shorts don’t know until
+    the instant of expiration whether they are, in net, receiving or paying
+    funds, and longs have to believe in the long-term liquidity of shorts to be
+    able to fund incremental payoffs in perpetuity (recognizing that at some
+    point, the value of each payoff will be infinitesimal).
+    <br /><br />
+    If I were long an EO with a high FF, I might expect my counterpart short to
+    have to post some collateral proving liquidity N periods out into the
+    future. If a short defaults on a payoff, or if the value of the underlying
+    shifts dramatically (skyrockets for a call / plummets for a put) such that
+    the posted collateral falls below the expected N-period threshold, we might
+    expect shorts to face margin calls. If a long also suspects a short to be
+    illiquid across the short’s portfolio, the long should be expected to stop
+    funding EO payments and force collateral liquidation.
+  </p>
+  <br /><br />
+  <hr />
+  <br /><br />
+  <p class="notes">
+    Scratchpad: <br /><br />
+    How does the funding fee mechanism work and how can we derive this funding
+    fee term ourselves?
+    <br /><br />
+    To understand what’s actually happening here, it’s helpful to walk through
+    the funding mechanics tangibly as laid out in the paper.
+    <br /><br />
+    Take the vanilla EO with a FF = 1 (the 1/2^n series).
+    <br /><br />
+    The sum of this infinite series is 1, which means that in buying this EO, we
+    effectively own 1 option broken up into 0.5 of an option expiring today,
+    0.25 of an option expiring tomorrow, and so on, as mentioned in the paper.
+    <br /><br />
+    If we were to buy this EO and just hold it, after the first period, half of
+    our ‘equivalent portfolio’ will have expired.
+    <br /><br />
+    For an option to be *~everlasting~*, after each funding period we would
+    ideally expect to own the same nominal volume of options and maintain the
+    same portfolio composition, we’d just want it dated one period into the
+    future.
+    <br /><br />
+    The paper does a great job of walking through this mechanic so I’ll try to
+    avoid being redundant, but in effect, if we’re long an EO, we can purchase
+    more of the same EO just a moment before an expiration period and thereby
+    ensure that our nominal position volume and portfolio composition don’t
+    change. Because the expirations result in a payoff, we actually end up
+    having to pay just the difference between the mark of the EO and the value
+    of its next immediate payoff.
+    <br /><br />
+    When FF=1, we just double our position in the EO right before an expiration
+    and we end up realizing the payoff equivalent to owning a conventional
+    option set to expire at that moment.
+    <br /><br />
+    Note: I didn't have to close any positions to roll fwd. In effect, the EO
+    partially closes on its own.
+    <br /><br />
+    What happens to this funding fee if our funding frequency increases?
+    <br /><br />
+    To answer this question, it’s first helpful to understand how much we have
+    to gross up each portfolio in order to successfully roll through expiration
+    periods.
+    <br /><br />
+    Grossing up the portfolio effectively means multiplying all of our positions
+    by an amount X such that our weights for positions (n+1) equal weights for
+    position n. For example, for our vanilla EO of 1/2^n, we are trying to solve
+    for:
+    <br />
+    $$x\left({1\over{2^{n}}}\right) = {1\over{2^{n-1}}}$$
+    <br />
+    $$x = 2$$
+    <br />
+    Generalizing for all EOs:
+    <br />
+    $$x\left({1\over{FF}}\right)\left({FF\over{FF+1}}\right)^{n} =
+    \left({1\over{FF}}\right)\left({FF\over{FF+1}}\right)^{n-1}$$
+    <br />
+    $$x = {FF+1\over{FF}}$$
+    <br /><br />
+    Technically since we presumably already own a finite 1 EO already, to gross
+    up, we can buy x-1 EOs, which simplifies to \(\left({FF+1}\over{FF}\right) -
+    1 = {1\over{FF}}\).
+    <br /><br />
+    Let’s try this out on an EO with FF = 3. This is what the portfolio looks
+    like before our first expiration:
+  </p>
+  <div id="chart3">
+    <!-- FF=3 -->
+    <script>
+      function series(FF, n, j) {
+        terms = [];
+        for (i = 1; i <= n; i++) {
+          terms.push(((1 / FF) * (FF / (FF + 1)) ** i * 100 * j).toFixed(2));
+        }
+        console.log(terms);
+        return terms;
+      }
+
+      var options = {
+        chart: {
+          type: "bar",
+        },
+
+        title: {
+          text: "The first 5 weights for an EO set to 3^(n-1)/4^n",
+          align: "left",
+          margin: 10,
+          offsetX: 0,
+          offsetY: 0,
+          floating: false,
+          style: {
+            fontSize: "14px",
+          },
+        },
+
+        series: [
+          {
+            name: "options (sorted in order of increasing time to expiration)",
+            data: series(3, 5, 1),
+          },
+        ],
+        xaxis: {
+          categories: [1, 2, 3, 4, 5],
+        },
+        yaxis: {
+          labels: {
+            formatter: function (val, index) {
+              return val.toFixed(0) + "%";
+            },
+          },
+        },
+      };
+
+      var chart = new ApexCharts(document.querySelector("#chart3"), options);
+
+      chart.render();
+    </script>
+  </div>
+  <p class="notes">
+    According to our term 1/FF, we buy 1/3 more of the same EO a moment before
+    the expiration, creating the following portfolio:
+  </p>
+  <div id="chart4">
+    <!-- classic EO -->
+    <script>
+      var options = {
+        chart: {
+          type: "bar",
+          stacked: true,
+        },
+
+        title: {
+          text: "The first 5 weights for an EO set to 3^(n-1)/4^n",
+          align: "left",
+          margin: 10,
+          offsetX: 0,
+          offsetY: 0,
+          floating: false,
+          style: {
+            fontSize: "14px",
+          },
+        },
+
+        series: [
+          {
+            name: "options (sorted in order of increasing time to expiration)",
+            data: series(3, 5, 1),
+          },
+          {
+            name: "new position",
+            data: series(3, 5, 1 / 3),
+          },
+        ],
+        xaxis: {
+          categories: [1, 2, 3, 4, 5],
+        },
+        yaxis: {
+          labels: {
+            formatter: function (val, index) {
+              return val.toFixed(0) + "%";
+            },
+          },
+        },
+      };
+
+      var chart = new ApexCharts(document.querySelector("#chart4"), options);
+
+      chart.render();
+    </script>
+  </div>
+
+  <p class="notes">
+    After our first expiration, our portfolio has rolled fwd and we end up
+    earning the equivalent of 1/3 the payoff of the equivalent option expiring
+    today.
+    <br /><br />
+    Generalized, our funding fee = (1/FF)*(mark - payoff).
+  </p>
+</div>
+</main>
+  </body>
+
+  <script>
+    (function (i, s, o, g, r, a, m) {
+      i["GoogleAnalyticsObject"] = r;
+      (i[r] =
+        i[r] ||
+        function () {
+          (i[r].q = i[r].q || []).push(arguments);
+        }),
+        (i[r].l = 1 * new Date());
+      (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m);
+    })(
+      window,
+      document,
+      "script",
+      "//www.google-analytics.com/analytics.js",
+      "ga"
+    );
+
+    ga("create", "UA-62520026-1", "auto");
+    ga("send", "pageview");
+  </script>
+</html>
